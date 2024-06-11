@@ -11,11 +11,7 @@ export class PrismaAnswersRepository implements AnswersRepository {
 
   async create(answer: Answer): Promise<void> {
     await this.prisma.answer.create({
-      data: {
-        content: answer.content,
-        authorId: answer.authorId.toString(),
-        questionId: answer.questionId.toString(),
-      },
+      data: PrismaAnswerMapper.toPrisma(answer),
     })
   }
 
@@ -32,12 +28,7 @@ export class PrismaAnswersRepository implements AnswersRepository {
       where: {
         id: answer.id.toString(),
       },
-      data: {
-        content: answer.content,
-        authorId: answer.authorId.toString(),
-        questionId: answer.questionId.toString(),
-        updatedAt: answer.updatedAt,
-      },
+      data: PrismaAnswerMapper.toPrisma(answer),
     })
   }
 
@@ -69,6 +60,6 @@ export class PrismaAnswersRepository implements AnswersRepository {
       },
     })
 
-    return answers.map((answer) => PrismaAnswerMapper.toDomain(answer))
+    return answers.map(PrismaAnswerMapper.toDomain)
   }
 }

@@ -10,36 +10,31 @@ export class PrismaQuestionsRepository implements QuestionsRepository {
   constructor(private prisma: PrismaService) {}
 
   async create(question: Question): Promise<void> {
+    const data = PrismaQuestionMapper.toPrisma(question)
+
     await this.prisma.question.create({
-      data: {
-        content: question.content,
-        slug: question.slug.value,
-        title: question.title,
-        authorId: question.authorId.toString(),
-      },
+      data,
     })
   }
 
   async delete(question: Question): Promise<void> {
+    const data = PrismaQuestionMapper.toPrisma(question)
+
     await this.prisma.question.delete({
       where: {
-        id: question.id.toString(),
+        id: data.id,
       },
     })
   }
 
   async save(question: Question): Promise<void> {
+    const data = PrismaQuestionMapper.toPrisma(question)
+
     await this.prisma.question.update({
       where: {
-        id: question.id.toString(),
+        id: data.id,
       },
-      data: {
-        content: question.content,
-        slug: question.slug.value,
-        title: question.title,
-        authorId: question.authorId.toString(),
-        updatedAt: question.updatedAt,
-      },
+      data,
     })
   }
 
@@ -73,8 +68,11 @@ export class PrismaQuestionsRepository implements QuestionsRepository {
     const questions = await this.prisma.question.findMany({
       take: TAKE_PER_PAGE,
       skip: TAKE_PER_PAGE * (page - 1),
+      orderBy: {
+        createdAt: 'desc',
+      },
     })
 
-    return questions.map((question) => PrismaQuestionMapper.toDomain(question))
+    return questions.map(PrismaQuestionMapper.toDomain)
   }
 }
