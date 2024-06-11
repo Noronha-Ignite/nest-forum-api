@@ -9,13 +9,13 @@ import { Optional } from '@/core/types/optional'
 
 export interface QuestionProps {
   authorId: UniqueEntityID
-  bestAnswerId?: UniqueEntityID
+  bestAnswerId?: UniqueEntityID | null
   attachments: QuestionAttachmentList
   slug: Slug
   title: string
   content: string
   createdAt: Date
-  updatedAt?: Date
+  updatedAt?: Date | null
 }
 
 type CreateQuestionPayload = Optional<
@@ -50,8 +50,12 @@ export class Question extends AggregateRoot<QuestionProps> {
     return this.props.bestAnswerId
   }
 
-  set bestAnswerId(bestAnswerId: UniqueEntityID | undefined) {
-    if (!!bestAnswerId && !bestAnswerId.isEqualTo(this.props.bestAnswerId)) {
+  set bestAnswerId(bestAnswerId: UniqueEntityID | undefined | null) {
+    if (
+      !!bestAnswerId &&
+      this.props.bestAnswerId &&
+      !bestAnswerId.isEqualTo(this.props.bestAnswerId)
+    ) {
       this.addDomainEvent(new QuestionBestAnswerChosenEvent(this, bestAnswerId))
     }
 
