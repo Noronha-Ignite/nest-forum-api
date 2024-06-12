@@ -1,9 +1,15 @@
-import { Controller, Get, Query, UseGuards } from '@nestjs/common'
-import { JwtService } from '@nestjs/jwt'
+import {
+  Controller,
+  Get,
+  InternalServerErrorException,
+  Query,
+  UseGuards,
+} from '@nestjs/common'
 import { JwtAuthGuard } from '@/infra/auth/jwt-auth.guard'
 import { ZodValidationPipe } from '../pipes/zod-validation-pipe'
-import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { z } from 'zod'
+import { FetchRecentQuestionsService } from '../services/fetch-recent-questions-service'
+import { QuestionPresenter } from '../presenters/question-presenter'
 
 const pageQueryParamSchema = z
   .string()
@@ -20,22 +26,19 @@ type PageQueryParamSchema = z.infer<typeof pageQueryParamSchema>
 @UseGuards(JwtAuthGuard)
 export class FetchRecentQuestionsController {
   constructor(
-    private readonly jwt: JwtService,
-    private readonly prisma: PrismaService,
+    private fetchRecentQuestionsService: FetchRecentQuestionsService,
   ) {}
 
   @Get()
   async handle(@Query('page', queryValidationPipe) page: PageQueryParamSchema) {
-    const QUESTIONS_PER_PAGE = 20
+    const result = await this.fetchRecentQuestionsService.execute({ page })
 
-    const questions = await this.prisma.question.findMany({
-      take: QUESTIONS_PER_PAGE,
-      skip: (page - 1) * QUESTIONS_PER_PAGE,
-      orderBy: {
-        createdAt: 'desc',
-      },
-    })
+    if (result.isLeft()) {
+      throw new InternalServerErrorException()
+    }
 
-    return { questions }
+    const { questions } = result.value
+
+    return { questions: questions.map(QuestionPresenter.toHTTP) }
   }
 }
