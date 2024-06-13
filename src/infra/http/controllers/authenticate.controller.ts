@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Post,
@@ -8,6 +9,7 @@ import {
 import { z } from 'zod'
 import { ZodValidationPipe } from '../pipes/zod-validation-pipe'
 import { AuthenticateStudentService } from '../services/authenticate-student-service'
+import { InvalidCredentialsError } from '@/domain/forum/application/use-cases/errors/invalid-credentials-error'
 
 const authenticateBodySchema = z.object({
   email: z.string().email(),
@@ -31,7 +33,14 @@ export class AuthenticateController {
     })
 
     if (result.isLeft()) {
-      throw new UnauthorizedException()
+      const error = result.value
+
+      switch (error.constructor) {
+        case InvalidCredentialsError:
+          throw new UnauthorizedException(error.message)
+        default:
+          throw new BadRequestException(error.message)
+      }
     }
 
     const { accessToken } = result.value
