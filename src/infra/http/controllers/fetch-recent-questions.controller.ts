@@ -1,7 +1,7 @@
 import { Controller, Get, Query } from '@nestjs/common'
 import { ZodValidationPipe } from '../pipes/zod-validation-pipe'
 import { z } from 'zod'
-import { FetchRecentQuestionsService } from '../services/fetch-recent-questions-service'
+import { FetchRecentQuestionsService } from '../services/fetch-recent-questions.service'
 import { QuestionPresenter } from '../presenters/question-presenter'
 
 const pageQueryParamSchema = z

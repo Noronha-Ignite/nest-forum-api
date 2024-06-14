@@ -3,7 +3,7 @@ import { CurrentUser } from '@/infra/auth/current-user-decorator'
 import { UserPayload } from '@/infra/auth/jwt.strategy'
 import { ZodValidationPipe } from '../pipes/zod-validation-pipe'
 import { z } from 'zod'
-import { CreateQuestionService } from '../services/create-question-service'
+import { CreateQuestionService } from '../services/create-question.service'
 
 const createQuestionBodySchema = z.object({
   title: z.string(),

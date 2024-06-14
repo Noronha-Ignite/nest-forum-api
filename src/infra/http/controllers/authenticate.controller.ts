@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common'
 import { z } from 'zod'
 import { ZodValidationPipe } from '../pipes/zod-validation-pipe'
-import { AuthenticateStudentService } from '../services/authenticate-student-service'
+import { AuthenticateStudentService } from '../services/authenticate-student.service'
 import { InvalidCredentialsError } from '@/domain/forum/application/use-cases/errors/invalid-credentials-error'
 import { Public } from '@/infra/auth/public'
 
