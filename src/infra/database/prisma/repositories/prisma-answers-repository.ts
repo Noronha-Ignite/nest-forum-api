@@ -10,8 +10,10 @@ export class PrismaAnswersRepository implements AnswersRepository {
   constructor(private prisma: PrismaService) {}
 
   async create(answer: Answer): Promise<void> {
+    const data = PrismaAnswerMapper.toPrisma(answer)
+
     await this.prisma.answer.create({
-      data: PrismaAnswerMapper.toPrisma(answer),
+      data,
     })
   }
 
@@ -55,6 +57,9 @@ export class PrismaAnswersRepository implements AnswersRepository {
     const answers = await this.prisma.answer.findMany({
       take: TAKE_PER_PAGE,
       skip: TAKE_PER_PAGE * (page - 1),
+      orderBy: {
+        createdAt: 'desc',
+      },
       where: {
         questionId,
       },
