@@ -19,6 +19,8 @@ import { AnswerQuestionService } from './services/answer-question.service'
 import { AnswerQuestionController } from './controllers/answer-question.controller'
 import { EditAnswerController } from './controllers/edit-answer.controller'
 import { EditAnswerService } from './services/edit-answer.service'
+import { DeleteAnswerController } from './controllers/delete-answer.controller'
+import { DeleteAnswerService } from './services/delete-answer.service'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -32,6 +34,7 @@ import { EditAnswerService } from './services/edit-answer.service'
     DeleteQuestionController,
     AnswerQuestionController,
     EditAnswerController,
+    DeleteAnswerController,
   ],
   providers: [
     CreateQuestionService,
@@ -43,6 +46,7 @@ import { EditAnswerService } from './services/edit-answer.service'
     DeleteQuestionService,
     AnswerQuestionService,
     EditAnswerService,
+    DeleteAnswerService,
   ],
 })
 export class HttpModule {}
