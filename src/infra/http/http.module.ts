@@ -11,6 +11,8 @@ import { RegisterStudentService } from './services/register-student.service'
 import { CryptographyModule } from '../cryptography/cryptography.module'
 import { GetQuestionBySlugService } from './services/get-question-by-slug.service'
 import { GetQuestionBySlugController } from './controllers/get-question-by-slug.controller'
+import { EditQuestionService } from './services/edit-question.service'
+import { EditQuestionController } from './controllers/edit-question.controller'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -20,6 +22,7 @@ import { GetQuestionBySlugController } from './controllers/get-question-by-slug.
     CreateQuestionController,
     FetchRecentQuestionsController,
     GetQuestionBySlugController,
+    EditQuestionController,
   ],
   providers: [
     CreateQuestionService,
@@ -27,6 +30,7 @@ import { GetQuestionBySlugController } from './controllers/get-question-by-slug.
     AuthenticateStudentService,
     RegisterStudentService,
     GetQuestionBySlugService,
+    EditQuestionService,
   ],
 })
 export class HttpModule {}
