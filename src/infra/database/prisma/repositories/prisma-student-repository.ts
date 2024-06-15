@@ -20,6 +20,7 @@ export class PrismaStudentsRepository implements StudentsRepository {
     const student = await this.prisma.user.findUnique({
       where: {
         email,
+        role: 'STUDENT',
       },
     })
 
