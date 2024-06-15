@@ -1,4 +1,10 @@
-import { Body, Controller, Param, Post } from '@nestjs/common'
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Param,
+  Post,
+} from '@nestjs/common'
 import { CurrentUser } from '@/infra/auth/current-user-decorator'
 import { UserPayload } from '@/infra/auth/jwt.strategy'
 import { ZodValidationPipe } from '../pipes/zod-validation-pipe'
@@ -26,11 +32,15 @@ export class AnswerQuestionController {
     const { content } = body
     const authorId = user.sub
 
-    await this.answerQuestionService.execute({
+    const result = await this.answerQuestionService.execute({
       attachmentIds: [],
       content,
       authorId,
       questionId,
     })
+
+    if (result.isLeft()) {
+      throw new BadRequestException()
+    }
   }
 }
