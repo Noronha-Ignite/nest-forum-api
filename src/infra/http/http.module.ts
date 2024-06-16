@@ -34,6 +34,8 @@ import { CommentOnAnswerController } from './controllers/comment-on-answer.contr
 import { CommentOnAnswerService } from './services/comment-on-answer.service'
 import { DeleteAnswerCommentController } from './controllers/delete-answer-comment.controller'
 import { DeleteAnswerCommentService } from './services/delete-answer-comment.service'
+import { FetchQuestionCommentsController } from './controllers/fetch-question-comments.controller'
+import { FetchQuestionCommentsService } from './services/fetch-question-comments.service'
 
 const controllers = [
   CreateAccountController,
@@ -47,6 +49,7 @@ const controllers = [
   EditAnswerController,
   DeleteAnswerController,
   FetchQuestionAnswersController,
+  FetchQuestionCommentsController,
   ChooseQuestionBestAnswerController,
   CommentOnQuestionController,
   CommentOnAnswerController,
@@ -66,6 +69,7 @@ const services: Provider[] = [
   EditAnswerService,
   DeleteAnswerService,
   FetchQuestionAnswersService,
+  FetchQuestionCommentsService,
   ChooseQuestionBestAnswerService,
   CommentOnQuestionService,
   CommentOnAnswerService,
