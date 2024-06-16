@@ -1,6 +1,5 @@
 import {
   BadRequestException,
-  Body,
   Controller,
   HttpCode,
   Param,
@@ -8,23 +7,9 @@ import {
 } from '@nestjs/common'
 import { CurrentUser } from '@/infra/auth/current-user-decorator'
 import { UserPayload } from '@/infra/auth/jwt.strategy'
-import { ZodValidationPipe } from '../pipes/zod-validation-pipe'
-import { z } from 'zod'
 import { ChooseQuestionBestAnswerService } from '../services/choose-best-answer.service'
 
-const chooseQuestionBestAnswerBodySchema = z.object({
-  answerId: z.string(),
-})
-
-type ChooseQuestionBestAnswerBodySchema = z.infer<
-  typeof chooseQuestionBestAnswerBodySchema
->
-
-const bodyValidationPipe = new ZodValidationPipe(
-  chooseQuestionBestAnswerBodySchema,
-)
-
-@Controller('/questions/:questionId/bestAnswer')
+@Controller('/answers/:answerId/choose-as-best')
 export class ChooseQuestionBestAnswerController {
   constructor(
     private readonly chooseQuestionBestAnswerService: ChooseQuestionBestAnswerService,
@@ -33,11 +18,9 @@ export class ChooseQuestionBestAnswerController {
   @Patch()
   @HttpCode(204)
   async handle(
-    @Param('questionId') questionId: string,
-    @Body(bodyValidationPipe) body: ChooseQuestionBestAnswerBodySchema,
+    @Param('answerId') answerId: string,
     @CurrentUser() user: UserPayload,
   ) {
-    const { answerId } = body
     const authorId = user.sub
 
     const result = await this.chooseQuestionBestAnswerService.execute({

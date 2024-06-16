@@ -36,7 +36,7 @@ describe('Delete question comment (E2E)', () => {
     await app.init()
   })
 
-  test('[DELETE] /questions/:questionId/comments', async () => {
+  test('[DELETE] /questions/comments/:commentId', async () => {
     const user = await studentFactory.makePrismaStudent()
     const accessToken = jwt.sign({ sub: user.id.toString() })
     const question = await questionFactory.makePrismaQuestion({
@@ -49,11 +49,8 @@ describe('Delete question comment (E2E)', () => {
       })
 
     const response = await request(app.getHttpServer())
-      .delete(`/questions/${question.id.toString()}/comments`)
+      .delete(`/questions/comments/${questionComment.id.toString()}`)
       .set('Authorization', `Bearer ${accessToken}`)
-      .send({
-        commentId: questionComment.id.toString(),
-      })
 
     expect(response.statusCode).toBe(204)
 
