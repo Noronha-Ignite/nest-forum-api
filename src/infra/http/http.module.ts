@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common'
+import { Module, Provider } from '@nestjs/common'
 import { DatabaseModule } from '../database/database.module'
 import { AuthenticateController } from './controllers/authenticate.controller'
 import { CreateAccountController } from './controllers/create-account.controller'
@@ -21,32 +21,43 @@ import { EditAnswerController } from './controllers/edit-answer.controller'
 import { EditAnswerService } from './services/edit-answer.service'
 import { DeleteAnswerController } from './controllers/delete-answer.controller'
 import { DeleteAnswerService } from './services/delete-answer.service'
+import { FetchQuestionAnswersController } from './controllers/fetch-question-answers.controller'
+import { FetchQuestionAnswersService } from './services/fetch-question-answers.service'
+import { AnswerPresenter } from './presenters/answer-presenter'
+
+const controllers = [
+  CreateAccountController,
+  AuthenticateController,
+  CreateQuestionController,
+  FetchRecentQuestionsController,
+  GetQuestionBySlugController,
+  EditQuestionController,
+  DeleteQuestionController,
+  AnswerQuestionController,
+  EditAnswerController,
+  DeleteAnswerController,
+  FetchQuestionAnswersController,
+]
+
+const services: Provider[] = [
+  CreateQuestionService,
+  FetchRecentQuestionsService,
+  AuthenticateStudentService,
+  RegisterStudentService,
+  GetQuestionBySlugService,
+  EditQuestionService,
+  DeleteQuestionService,
+  AnswerQuestionService,
+  EditAnswerService,
+  DeleteAnswerService,
+  FetchQuestionAnswersService,
+]
+
+const presenters: Provider[] = [AnswerPresenter]
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
-  controllers: [
-    CreateAccountController,
-    AuthenticateController,
-    CreateQuestionController,
-    FetchRecentQuestionsController,
-    GetQuestionBySlugController,
-    EditQuestionController,
-    DeleteQuestionController,
-    AnswerQuestionController,
-    EditAnswerController,
-    DeleteAnswerController,
-  ],
-  providers: [
-    CreateQuestionService,
-    FetchRecentQuestionsService,
-    AuthenticateStudentService,
-    RegisterStudentService,
-    GetQuestionBySlugService,
-    EditQuestionService,
-    DeleteQuestionService,
-    AnswerQuestionService,
-    EditAnswerService,
-    DeleteAnswerService,
-  ],
+  controllers: [...controllers],
+  providers: [...services, ...presenters],
 })
 export class HttpModule {}

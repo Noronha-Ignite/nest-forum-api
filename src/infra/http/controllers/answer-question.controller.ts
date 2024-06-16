@@ -19,7 +19,7 @@ type AnswerQuestionBodySchema = z.infer<typeof answerQuestionBodySchema>
 
 const bodyValidationPipe = new ZodValidationPipe(answerQuestionBodySchema)
 
-@Controller('/question/:questionId/answer')
+@Controller('/questions/:questionId/answers')
 export class AnswerQuestionController {
   constructor(private readonly answerQuestionService: AnswerQuestionService) {}
 
