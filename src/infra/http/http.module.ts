@@ -28,6 +28,8 @@ import { ChooseQuestionBestAnswerService } from './services/choose-best-answer.s
 import { ChooseQuestionBestAnswerController } from './controllers/choose-question-best-answer.controller'
 import { CommentOnQuestionService } from './services/comment-on-question.service'
 import { CommentOnQuestionController } from './controllers/comment-on-question.controller'
+import { DeleteQuestionCommentController } from './controllers/delete-question-comment.controller'
+import { DeleteQuestionCommentService } from './services/delete-question-comment.service'
 
 const controllers = [
   CreateAccountController,
@@ -43,6 +45,7 @@ const controllers = [
   FetchQuestionAnswersController,
   ChooseQuestionBestAnswerController,
   CommentOnQuestionController,
+  DeleteQuestionCommentController,
 ]
 
 const services: Provider[] = [
@@ -59,6 +62,7 @@ const services: Provider[] = [
   FetchQuestionAnswersService,
   ChooseQuestionBestAnswerService,
   CommentOnQuestionService,
+  DeleteQuestionCommentService,
 ]
 
 const presenters: Provider[] = [AnswerPresenter]
