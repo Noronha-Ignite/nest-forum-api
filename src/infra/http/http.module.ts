@@ -32,6 +32,8 @@ import { DeleteQuestionCommentController } from './controllers/delete-question-c
 import { DeleteQuestionCommentService } from './services/delete-question-comment.service'
 import { CommentOnAnswerController } from './controllers/comment-on-answer.controller'
 import { CommentOnAnswerService } from './services/comment-on-answer.service'
+import { DeleteAnswerCommentController } from './controllers/delete-answer-comment.controller'
+import { DeleteAnswerCommentService } from './services/delete-answer-comment.service'
 
 const controllers = [
   CreateAccountController,
@@ -49,6 +51,7 @@ const controllers = [
   CommentOnQuestionController,
   CommentOnAnswerController,
   DeleteQuestionCommentController,
+  DeleteAnswerCommentController,
 ]
 
 const services: Provider[] = [
@@ -67,6 +70,7 @@ const services: Provider[] = [
   CommentOnQuestionService,
   CommentOnAnswerService,
   DeleteQuestionCommentService,
+  DeleteAnswerCommentService,
 ]
 
 const presenters: Provider[] = [AnswerPresenter]
