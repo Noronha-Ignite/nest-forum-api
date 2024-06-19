@@ -38,6 +38,7 @@ import { FetchQuestionCommentsController } from './controllers/fetch-question-co
 import { FetchQuestionCommentsService } from './services/fetch-question-comments.service'
 import { FetchAnswerCommentsController } from './controllers/fetch-answer-comments.controller'
 import { FetchAnswerCommentsService } from './services/fetch-answer-comments.service'
+import { UploadAttachmentController } from './controllers/upload-attachment.controller'
 
 const controllers = [
   CreateAccountController,
@@ -58,6 +59,7 @@ const controllers = [
   CommentOnAnswerController,
   DeleteQuestionCommentController,
   DeleteAnswerCommentController,
+  UploadAttachmentController,
 ]
 
 const services: Provider[] = [
