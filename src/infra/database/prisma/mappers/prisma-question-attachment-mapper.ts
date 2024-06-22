@@ -40,7 +40,7 @@ export class PrismaQuestionAttachmentMapper {
     attachments: QuestionAttachment[],
   ): Prisma.AttachmentDeleteManyArgs {
     const attachmentIds = attachments.map((attachment) =>
-      attachment.id.toString(),
+      attachment.attachmentId.toString(),
     )
 
     return {

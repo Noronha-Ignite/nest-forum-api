@@ -19,6 +19,7 @@ import { NotAllowedError } from '@/core/errors/general/not-allowed-error'
 const editQuestionBodySchema = z.object({
   title: z.string(),
   content: z.string(),
+  attachments: z.array(z.string().uuid()),
 })
 
 type EditQuestionBodySchema = z.infer<typeof editQuestionBodySchema>
@@ -36,14 +37,14 @@ export class EditQuestionController {
     @Body(bodyValidationPipe) body: EditQuestionBodySchema,
     @CurrentUser() user: UserPayload,
   ) {
-    const { title, content } = body
+    const { title, content, attachments } = body
     const userId = user.sub
 
     const result = await this.editQuestionService.execute({
       title,
       content,
       authorId: userId,
-      attachmentIds: [],
+      attachmentIds: attachments,
       questionId,
     })
 
