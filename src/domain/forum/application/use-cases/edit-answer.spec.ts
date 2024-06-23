@@ -89,4 +89,50 @@ describe('Edit answer use case', () => {
     expect(result.isLeft()).toBe(true)
     expect(result.value).toBeInstanceOf(NotAllowedError)
   })
+
+  it('should sync new and remove attachments when editing a answer', async () => {
+    const newAnswer = makeAnswer(
+      {
+        authorId: new UniqueEntityID('author-1'),
+        content: 'content-1',
+      },
+      new UniqueEntityID('id-test'),
+    )
+
+    await inMemorySutRepository.create(newAnswer)
+    expect(inMemorySutRepository.items[0]).toMatchObject({
+      content: 'content-1',
+    })
+
+    inMemoryAnswerAttachmentRepository.items.push(
+      makeAnswerAttachment({
+        answerId: new UniqueEntityID('id-test'),
+        attachmentId: new UniqueEntityID('1'),
+      }),
+      makeAnswerAttachment({
+        answerId: new UniqueEntityID('id-test'),
+        attachmentId: new UniqueEntityID('2'),
+      }),
+    )
+
+    const result = await sut.execute({
+      answerId: 'id-test',
+      authorId: 'author-1',
+      content: 'content-2',
+      attachmentIds: ['1', '3'],
+    })
+
+    expect(result.isRight()).toBe(true)
+    expect(inMemoryAnswerAttachmentRepository.items).toHaveLength(2)
+    expect(inMemoryAnswerAttachmentRepository.items).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          attachmentId: new UniqueEntityID('1'),
+        }),
+        expect.objectContaining({
+          attachmentId: new UniqueEntityID('3'),
+        }),
+      ]),
+    )
+  })
 })

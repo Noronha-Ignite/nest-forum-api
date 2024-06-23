@@ -13,6 +13,7 @@ import { AnswerQuestionService } from '../services/answer-question.service'
 
 const answerQuestionBodySchema = z.object({
   content: z.string(),
+  attachments: z.array(z.string().uuid()),
 })
 
 type AnswerQuestionBodySchema = z.infer<typeof answerQuestionBodySchema>
@@ -29,11 +30,11 @@ export class AnswerQuestionController {
     @Body(bodyValidationPipe) body: AnswerQuestionBodySchema,
     @CurrentUser() user: UserPayload,
   ) {
-    const { content } = body
+    const { content, attachments } = body
     const authorId = user.sub
 
     const result = await this.answerQuestionService.execute({
-      attachmentIds: [],
+      attachmentIds: attachments,
       content,
       authorId,
       questionId,

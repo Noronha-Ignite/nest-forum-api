@@ -18,6 +18,7 @@ import { ResourceNotFoundError } from '@/core/errors/general/resource-not-found-
 
 const editAnswerBodySchema = z.object({
   content: z.string(),
+  attachments: z.array(z.string().uuid()),
 })
 
 type EditAnswerBodySchema = z.infer<typeof editAnswerBodySchema>
@@ -35,11 +36,11 @@ export class EditAnswerController {
     @Body(bodyValidationPipe) body: EditAnswerBodySchema,
     @CurrentUser() user: UserPayload,
   ) {
-    const { content } = body
+    const { content, attachments } = body
     const authorId = user.sub
 
     const result = await this.editAnswerService.execute({
-      attachmentIds: [],
+      attachmentIds: attachments,
       content,
       authorId,
       answerId,
