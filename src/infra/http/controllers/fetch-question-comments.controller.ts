@@ -2,7 +2,7 @@ import { Controller, Get, Param, Query } from '@nestjs/common'
 import { ZodValidationPipe } from '../pipes/zod-validation-pipe'
 import { z } from 'zod'
 import { FetchQuestionCommentsService } from '../services/fetch-question-comments.service'
-import { QuestionCommentPresenter } from '../presenters/question-comment-presenter'
+import { CommentWithAuthorPresenter } from '../presenters/comment-with-author-presenter'
 
 const pageQueryParamSchema = z
   .string()
@@ -31,10 +31,10 @@ export class FetchQuestionCommentsController {
       questionId,
     })
 
-    const { questionComments } = result.value
+    const { comments } = result.value
 
     return {
-      questionComments: questionComments.map(QuestionCommentPresenter.toHTTP),
+      comments: comments.map(CommentWithAuthorPresenter.toHTTP),
     }
   }
 }
