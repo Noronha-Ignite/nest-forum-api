@@ -42,6 +42,8 @@ import { UploadAttachmentController } from './controllers/upload-attachment.cont
 import { StorageModule } from '../storage/storage.module'
 import { UploadAndCreateAttachmentService } from './services/upload-and-create-attachment.service'
 import { EventsModule } from '../events/events.module'
+import { ReadNotificationController } from './controllers/read-notification.controller'
+import { ReadNotificationService } from './services/read-notification.service'
 
 const controllers = [
   CreateAccountController,
@@ -63,6 +65,7 @@ const controllers = [
   DeleteQuestionCommentController,
   DeleteAnswerCommentController,
   UploadAttachmentController,
+  ReadNotificationController,
 ]
 
 const services: Provider[] = [
@@ -85,6 +88,7 @@ const services: Provider[] = [
   DeleteQuestionCommentService,
   DeleteAnswerCommentService,
   UploadAndCreateAttachmentService,
+  ReadNotificationService,
 ]
 
 const presenters: Provider[] = [AnswerPresenter]
