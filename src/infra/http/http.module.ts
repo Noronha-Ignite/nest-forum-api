@@ -41,6 +41,7 @@ import { FetchAnswerCommentsService } from './services/fetch-answer-comments.ser
 import { UploadAttachmentController } from './controllers/upload-attachment.controller'
 import { StorageModule } from '../storage/storage.module'
 import { UploadAndCreateAttachmentService } from './services/upload-and-create-attachment.service'
+import { EventsModule } from '../events/events.module'
 
 const controllers = [
   CreateAccountController,
@@ -89,7 +90,7 @@ const services: Provider[] = [
 const presenters: Provider[] = [AnswerPresenter]
 
 @Module({
-  imports: [DatabaseModule, CryptographyModule, StorageModule],
+  imports: [DatabaseModule, CryptographyModule, StorageModule, EventsModule],
   controllers: [...controllers],
   providers: [...services, ...presenters],
 })
